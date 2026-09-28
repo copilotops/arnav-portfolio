@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; color: #e5e5e5; overflow-x: hidden; cursor: default; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; color: #e5e5e5; overflow-x: hidden; }
         h1, h2, h3, .font-display { font-family: 'Syne', sans-serif; }
         
         /* Background Glows */
@@ -23,8 +23,8 @@
         /* Glassmorphism */
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); position: relative; z-index: 1; transition: all 0.3s ease; }
         
-        /* Universal Clickable Element */
-        .clickable { cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; }
+        /* Universal Clickable Effect */
+        .clickable { cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 1; text-decoration: none; display: block; }
         .clickable:hover { transform: translateY(-5px); border-color: rgba(34, 211, 238, 0.6); box-shadow: 0 15px 30px -15px rgba(34, 211, 238, 0.4); }
         
         /* Gradient Text */
@@ -43,14 +43,13 @@
         .cursor { display: inline-block; width: 3px; height: 1.2em; background: #22d3ee; margin-left: 5px; animation: blink 1s infinite; vertical-align: middle; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* Interactive Project Card Spotlight */
-        .card-spotlight { position: relative; overflow: hidden; }
-        .card-spotlight::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.15), transparent 40%);
-            opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 2;
-        }
-        .card-spotlight:hover::before { opacity: 1; }
+        /* Modal Pop-up Styles */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 1rem; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: #0a0a0a; border: 1px solid rgba(34, 211, 238, 0.3); max-width: 600px; width: 100%; padding: 2rem; border-radius: 16px; position: relative; animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer; transition: color 0.3s; }
+        .close-btn:hover { color: #fff; }
 
         /* Active Nav Link */
         .nav-link.active { color: #22d3ee; text-shadow: 0 0 8px rgba(34, 211, 238, 0.5); }
@@ -100,8 +99,6 @@
                     Contact Me
                 </a>
             </div>
-            
-            <!-- Clickable Contact Icons -->
             <div class="mt-12 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-500 text-sm">
                 <a href="https://maps.google.com/?q=Gandhinagar,Gujarat,India" target="_blank" class="clickable flex items-center gap-2 hover:text-cyan-400"><i class="fas fa-map-marker-alt text-cyan-400"></i> Gandhinagar, India</a>
                 <a href="tel:+919998700342" class="clickable flex items-center gap-2 hover:text-cyan-400"><i class="fas fa-phone text-cyan-400"></i> +91-9998700342</a>
@@ -124,20 +121,19 @@
                 </p>
             </div>
             <div class="grid grid-cols-2 gap-4">
-                <!-- Clickable Stats -->
-                <a href="#experience" class="reveal glass p-8 rounded-2xl clickable text-center block">
+                <a href="#experience" class="reveal glass p-8 rounded-2xl clickable text-center">
                     <h3 class="text-4xl font-bold gradient-text">10+</h3>
                     <p class="text-gray-400 mt-2">Years Experience</p>
                 </a>
-                <a href="#projects" class="reveal glass p-8 rounded-2xl clickable text-center block mt-8">
+                <a href="#projects" class="reveal glass p-8 rounded-2xl clickable text-center mt-8">
                     <h3 class="text-4xl font-bold gradient-text">3+</h3>
                     <p class="text-gray-400 mt-2">AI Agents Built</p>
                 </a>
-                <a href="#experience" class="reveal glass p-8 rounded-2xl clickable text-center block">
+                <a href="https://www.tcs.com/" target="_blank" class="reveal glass p-8 rounded-2xl clickable text-center">
                     <h3 class="text-4xl font-bold gradient-text">TCS</h3>
                     <p class="text-gray-400 mt-2">Current Employer</p>
                 </a>
-                <a href="#education" class="reveal glass p-8 rounded-2xl clickable text-center block mt-8">
+                <a href="#education" class="reveal glass p-8 rounded-2xl clickable text-center mt-8">
                     <h3 class="text-4xl font-bold gradient-text">4+</h3>
                     <p class="text-gray-400 mt-2">Certifications</p>
                 </a>
@@ -153,43 +149,42 @@
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <!-- Clickable Skills -->
-            <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-robot text-4xl text-cyan-400 mb-4"></i>
                 <p class="font-bold text-white">Copilot Studio</p>
                 <p class="text-xs text-gray-500 mt-1">GitHub Harness</p>
             </a>
-            <a href="https://learn.microsoft.com/en-us/power-automate/" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="https://learn.microsoft.com/en-us/power-automate/" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-bolt text-4xl text-purple-400 mb-4"></i>
                 <p class="font-bold text-white">Power Automate</p>
                 <p class="text-xs text-gray-500 mt-1">Workflow Logic</p>
             </a>
-            <a href="https://en.wikipedia.org/wiki/Prompt_engineering" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="https://en.wikipedia.org/wiki/Prompt_engineering" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-comment-dots text-4xl text-cyan-400 mb-4"></i>
                 <p class="font-bold text-white">Prompt Design</p>
                 <p class="text-xs text-gray-500 mt-1">AI Interaction</p>
             </a>
-            <a href="https://www.tcsion.com/" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="https://www.tcsion.com/" target="_blank" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-project-diagram text-4xl text-purple-400 mb-4"></i>
                 <p class="font-bold text-white">ERP Systems</p>
                 <p class="text-xs text-gray-500 mt-1">TCS iON</p>
             </a>
-            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-chart-line text-4xl text-cyan-400 mb-4"></i>
                 <p class="font-bold text-white">Business Analysis</p>
                 <p class="text-xs text-gray-500 mt-1">Requirement Gathering</p>
             </a>
-            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-vial text-4xl text-purple-400 mb-4"></i>
                 <p class="font-bold text-white">UAT & Testing</p>
                 <p class="text-xs text-gray-500 mt-1">Defect Tracking</p>
             </a>
-            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-cogs text-4xl text-cyan-400 mb-4"></i>
                 <p class="font-bold text-white">System Config</p>
                 <p class="text-xs text-gray-500 mt-1">Process Optimization</p>
             </a>
-            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center block">
+            <a href="#experience" class="reveal glass p-6 rounded-2xl clickable text-center">
                 <i class="fas fa-handshake text-4xl text-purple-400 mb-4"></i>
                 <p class="font-bold text-white">Stakeholder Mgt</p>
                 <p class="text-xs text-gray-500 mt-1">Coordination</p>
@@ -206,50 +201,41 @@
 
         <div class="relative border-l-2 border-gray-800 ml-6 md:ml-0 md:left-1/2 md:-translate-x-1/2 space-y-16">
             
-            <!-- Job 1 -->
-            <a href="https://www.tcs.com/" target="_blank" class="reveal block clickable relative pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right md:ml-0">
+            <a href="https://www.tcs.com/" target="_blank" class="reveal block clickable glass p-8 rounded-2xl relative pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right md:ml-0">
                 <div class="absolute -left-[9px] top-2 w-4 h-4 bg-cyan-400 rounded-full ring-4 ring-cyan-400/20"></div>
-                <div class="glass p-8 rounded-2xl">
-                    <span class="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">Apr 2021 - Present</span>
-                    <h3 class="text-xl font-bold text-white mt-4">Automation & Copilot Studio Associate</h3>
-                    <p class="text-purple-400 font-semibold mb-4">Tata Consultancy Services Limited</p>
-                    <ul class="text-gray-400 text-sm space-y-2 text-left md:text-right">
-                        <li>Designing Copilot Studio agents and Power Automate workflows.</li>
-                        <li>Building Software Selection & Request Creation project using Copilot Studio GitHub harness.</li>
-                        <li>Built automation logic for software search, request intake, and validation.</li>
-                        <li>Managed workflow integrations to improve operational efficiency.</li>
-                    </ul>
-                </div>
+                <span class="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">Apr 2021 - Present</span>
+                <h3 class="text-xl font-bold text-white mt-4">Automation & Copilot Studio Associate</h3>
+                <p class="text-purple-400 font-semibold mb-4">Tata Consultancy Services Limited</p>
+                <ul class="text-gray-400 text-sm space-y-2 text-left md:text-right">
+                    <li>Designing Copilot Studio agents and Power Automate workflows.</li>
+                    <li>Building Software Selection & Request Creation project using Copilot Studio GitHub harness.</li>
+                    <li>Built automation logic for software search, request intake, and validation.</li>
+                    <li>Managed workflow integrations to improve operational efficiency.</li>
+                </ul>
             </a>
 
-            <!-- Job 2 -->
-            <a href="#" class="reveal block clickable relative pl-12 md:pl-12 md:w-1/2 md:ml-auto">
+            <a href="https://www.google.com/search?q=In2ITTech+Pvt+Ltd" target="_blank" class="reveal block clickable glass p-8 rounded-2xl relative pl-12 md:pl-12 md:w-1/2 md:ml-auto">
                 <div class="absolute -left-[9px] top-2 w-4 h-4 bg-purple-400 rounded-full ring-4 ring-purple-400/20"></div>
-                <div class="glass p-8 rounded-2xl">
-                    <span class="text-xs font-mono text-purple-400 bg-purple-400/10 px-3 py-1 rounded-full">Jul 2020 - Mar 2021</span>
-                    <h3 class="text-xl font-bold text-white mt-4">Business Analyst</h3>
-                    <p class="text-cyan-400 font-semibold mb-4">In2ITTech Pvt Ltd</p>
-                    <ul class="text-gray-400 text-sm space-y-2">
-                        <li>Executed test cases, analyzed results, tracked defects.</li>
-                        <li>Conducted UAT and post-implementation testing.</li>
-                        <li>Collaborated with teams to improve solution quality.</li>
-                    </ul>
-                </div>
+                <span class="text-xs font-mono text-purple-400 bg-purple-400/10 px-3 py-1 rounded-full">Jul 2020 - Mar 2021</span>
+                <h3 class="text-xl font-bold text-white mt-4">Business Analyst</h3>
+                <p class="text-cyan-400 font-semibold mb-4">In2ITTech Pvt Ltd</p>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li>Executed test cases, analyzed results, tracked defects.</li>
+                    <li>Conducted UAT and post-implementation testing.</li>
+                    <li>Collaborated with teams to improve solution quality.</li>
+                </ul>
             </a>
 
-            <!-- Job 3 -->
-            <a href="#" class="reveal block clickable relative pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right md:ml-0">
+            <a href="https://www.google.com/search?q=Core+Integra" target="_blank" class="reveal block clickable glass p-8 rounded-2xl relative pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right md:ml-0">
                 <div class="absolute -left-[9px] top-2 w-4 h-4 bg-cyan-400 rounded-full ring-4 ring-cyan-400/20"></div>
-                <div class="glass p-8 rounded-2xl">
-                    <span class="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">May 2014 - Apr 2020</span>
-                    <h3 class="text-xl font-bold text-white mt-4">Transformation Manager</h3>
-                    <p class="text-purple-400 font-semibold mb-4">Core Integra</p>
-                    <ul class="text-gray-400 text-sm space-y-2 text-left md:text-right">
-                        <li>Led ERP implementation and system configuration activities.</li>
-                        <li>Acted as functional consultant between stakeholders and tech teams.</li>
-                        <li>Supported process transformation and solution adoption.</li>
-                    </ul>
-                </div>
+                <span class="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">May 2014 - Apr 2020</span>
+                <h3 class="text-xl font-bold text-white mt-4">Transformation Manager</h3>
+                <p class="text-purple-400 font-semibold mb-4">Core Integra</p>
+                <ul class="text-gray-400 text-sm space-y-2 text-left md:text-right">
+                    <li>Led ERP implementation and system configuration activities.</li>
+                    <li>Acted as functional consultant between stakeholders and tech teams.</li>
+                    <li>Supported process transformation and solution adoption.</li>
+                </ul>
             </a>
         </div>
     </section>
@@ -259,12 +245,12 @@
         <div class="text-center mb-16 reveal">
             <p class="text-cyan-400 font-mono mb-4">// 04. Featured Work</p>
             <h2 class="text-4xl md:text-5xl font-bold text-white font-display">Key <span class="gradient-text">Projects</span></h2>
-            <p class="text-gray-500 mt-4 max-w-2xl mx-auto">A selection of AI-driven automation projects I've designed and implemented.</p>
+            <p class="text-gray-500 mt-4 max-w-2xl mx-auto">Click on a project to view detailed breakdown.</p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-            <!-- Clickable Project 1 (Interactive Spotlight) -->
-            <a href="#" class="reveal glass rounded-2xl clickable group block card-spotlight overflow-hidden" onmousemove="handleMouseMove(event, this)">
+            <!-- Project 1 -->
+            <div onclick="openModal('modal1')" class="reveal glass rounded-2xl clickable group overflow-hidden cursor-pointer">
                 <div class="h-48 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center relative overflow-hidden">
                     <i class="fas fa-ticket-alt text-7xl text-cyan-400/50 group-hover:scale-110 transition duration-500"></i>
                 </div>
@@ -274,15 +260,15 @@
                         <span class="text-xs px-2 py-1 bg-white/5 rounded-full text-purple-400 border border-white/10">Power Automate</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 font-display">ServiceNow Ticket Agent</h3>
-                    <p class="text-gray-400 text-sm mb-4">AI-powered ServiceNow Agent for automated Incident Ticket and RITM creation. Streamlined request submission and tracking.</p>
+                    <p class="text-gray-400 text-sm mb-4">AI-powered ServiceNow Agent for automated Incident Ticket and RITM creation.</p>
                     <div class="text-cyan-400 text-sm font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-                        View Project <i class="fas fa-arrow-right text-xs"></i>
+                        Read More <i class="fas fa-arrow-right text-xs"></i>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Clickable Project 2 -->
-            <a href="#" class="reveal glass rounded-2xl clickable group block card-spotlight overflow-hidden" onmousemove="handleMouseMove(event, this)">
+            <!-- Project 2 -->
+            <div onclick="openModal('modal2')" class="reveal glass rounded-2xl clickable group overflow-hidden cursor-pointer">
                 <div class="h-48 bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center relative overflow-hidden">
                     <i class="fas fa-user-tie text-7xl text-purple-400/50 group-hover:scale-110 transition duration-500"></i>
                 </div>
@@ -292,15 +278,15 @@
                         <span class="text-xs px-2 py-1 bg-white/5 rounded-full text-purple-400 border border-white/10">Outlook</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 font-display">HR Resume Screening Agent</h3>
-                    <p class="text-gray-400 text-sm mb-4">Intelligent HR Agent analyzing recruiter mailboxes. Automated candidate screening based on predefined criteria and ranked top 5 applicants.</p>
+                    <p class="text-gray-400 text-sm mb-4">Intelligent HR Agent analyzing recruiter mailboxes to rank top 5 applicants.</p>
                     <div class="text-cyan-400 text-sm font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-                        View Project <i class="fas fa-arrow-right text-xs"></i>
+                        Read More <i class="fas fa-arrow-right text-xs"></i>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Clickable Project 3 -->
-            <a href="#" class="reveal glass rounded-2xl clickable group block card-spotlight overflow-hidden" onmousemove="handleMouseMove(event, this)">
+            <!-- Project 3 -->
+            <div onclick="openModal('modal3')" class="reveal glass rounded-2xl clickable group overflow-hidden cursor-pointer">
                 <div class="h-48 bg-gradient-to-br from-green-500/20 to-teal-600/20 flex items-center justify-center relative overflow-hidden">
                     <i class="fas fa-file-signature text-7xl text-green-400/50 group-hover:scale-110 transition duration-500"></i>
                 </div>
@@ -310,12 +296,12 @@
                         <span class="text-xs px-2 py-1 bg-white/5 rounded-full text-purple-400 border border-white/10">Power Automate</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 font-display">HR Recruitment Automation</h3>
-                    <p class="text-gray-400 text-sm mb-4">End-to-end recruitment solution. Retrieved resumes, centralized records in SharePoint, and validated applicant profiles automatically.</p>
+                    <p class="text-gray-400 text-sm mb-4">End-to-end recruitment solution retrieving resumes and validating profiles.</p>
                     <div class="text-cyan-400 text-sm font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-                        View Project <i class="fas fa-arrow-right text-xs"></i>
+                        Read More <i class="fas fa-arrow-right text-xs"></i>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </section>
 
@@ -325,7 +311,7 @@
             <div class="reveal">
                 <p class="text-cyan-400 font-mono mb-4">// 05. Education</p>
                 <h2 class="text-3xl font-bold text-white mb-8 font-display">Academic <span class="gradient-text">Background</span></h2>
-                <a href="https://www.du.ac.in/" target="_blank" class="glass p-8 rounded-2xl clickable flex items-center gap-6 block">
+                <a href="https://www.du.ac.in/" target="_blank" class="glass p-8 rounded-2xl clickable flex items-center gap-6">
                     <div class="w-16 h-16 rounded-full bg-cyan-400/10 flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-graduation-cap text-2xl text-cyan-400"></i>
                     </div>
@@ -341,15 +327,15 @@
                 <p class="text-cyan-400 font-mono mb-4">// 06. Achievements</p>
                 <h2 class="text-3xl font-bold text-white mb-8 font-display">Licenses & <span class="gradient-text">Certifications</span></h2>
                 <div class="space-y-4">
-                    <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/" target="_blank" class="glass p-6 rounded-2xl clickable flex items-center gap-4 block">
+                    <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/" target="_blank" class="glass p-6 rounded-2xl clickable flex items-center gap-4">
                         <i class="fas fa-certificate text-2xl text-cyan-400"></i>
                         <p class="text-gray-300 font-medium">Microsoft Certified: Azure AI Fundamentals (AI-900)</p>
                     </a>
-                    <a href="https://learn.microsoft.com/en-us/credentials/certifications/m365-copilot-agent-builder/" target="_blank" class="glass p-6 rounded-2xl clickable flex items-center gap-4 block">
+                    <a href="https://learn.microsoft.com/en-us/credentials/certifications/m365-copilot-agent-builder/" target="_blank" class="glass p-6 rounded-2xl clickable flex items-center gap-4">
                         <i class="fas fa-certificate text-2xl text-purple-400"></i>
                         <p class="text-gray-300 font-medium">Copilot for Microsoft 365 - AI Business Professional (AB-730)</p>
                     </a>
-                    <a href="#" class="glass p-6 rounded-2xl clickable flex items-center gap-4 block">
+                    <a href="https://learn.microsoft.com/en-us/credentials/" target="_blank" class="glass p-6 rounded-2xl clickable flex items-center gap-4">
                         <i class="fas fa-certificate text-2xl text-cyan-400"></i>
                         <p class="text-gray-300 font-medium">Completed: AB-410 & AB-620</p>
                     </a>
@@ -373,8 +359,72 @@
         </div>
     </footer>
 
+    <!-- Modal Pop-ups for Projects -->
+    <div id="modal1" class="modal-overlay" onclick="closeModal(event, 'modal1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal(event, 'modal1')">&times;</button>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-ticket-alt text-3xl text-cyan-400"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white font-display">ServiceNow Ticket Agent</h3>
+                    <p class="text-sm text-gray-400">Copilot Studio, Power Automate</p>
+                </div>
+            </div>
+            <ul class="text-gray-400 space-y-3 text-sm">
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Developed an AI-powered ServiceNow Agent for automated Incident Ticket and RITM creation.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Designed conversational workflows to capture user requirements and validate request data.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Integrated Copilot Studio with ServiceNow to streamline request submission and tracking.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Reduced manual effort and improved operational efficiency through end-to-end automation.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal-overlay" onclick="closeModal(event, 'modal2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal(event, 'modal2')">&times;</button>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user-tie text-3xl text-purple-400"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white font-display">HR Resume Screening Agent</h3>
+                    <p class="text-sm text-gray-400">Copilot Studio, Power Automate, Outlook</p>
+                </div>
+            </div>
+            <ul class="text-gray-400 space-y-3 text-sm">
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Built an intelligent HR Agent to analyze recruiter mailboxes and process incoming resumes.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Automated candidate screening based on predefined skills, experience, and business criteria.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Identified and ranked the top 5 candidates for recruiter review and faster decision-making.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Generated summarized candidate insights, reducing manual resume evaluation efforts.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal-overlay" onclick="closeModal(event, 'modal3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal(event, 'modal3')">&times;</button>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-file-signature text-3xl text-green-400"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white font-display">HR Recruitment Automation</h3>
+                    <p class="text-sm text-gray-400">Outlook, SharePoint, Power Automate, Copilot Studio</p>
+                </div>
+            </div>
+            <ul class="text-gray-400 space-y-3 text-sm">
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Developed an end-to-end recruitment automation solution leveraging Outlook and SharePoint.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Retrieved resumes from emails and centralized candidate records in SharePoint repositories.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Validated applicant profiles against job requirements and generated candidate rankings.</li>
+                <li class="flex gap-2"><i class="fas fa-check text-cyan-400 mt-1"></i> Enabled efficient collaboration between recruiters and hiring managers through automated workflows.</li>
+            </ul>
+        </div>
+    </div>
+
     <script>
-        // Pure JS Scroll Reveal
+        // Scroll Reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -387,13 +437,24 @@
             observer.observe(el);
         });
 
-        // Mouse Spotlight Effect on Cards
-        function handleMouseMove(e, card) {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
+        // Modal Logic (Tested and Working)
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            }
+        }
+        
+        function closeModal(event, id) {
+            // If clicked on close button OR the dark overlay itself
+            if (event.target.classList.contains('modal-overlay') || event.target.classList.contains('close-btn')) {
+                const modal = document.getElementById(id);
+                if(modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto'; // Restore scroll
+                }
+            }
         }
 
         // Active Navbar Link on Scroll
